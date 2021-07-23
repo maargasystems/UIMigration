@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { withNamespaces, Trans } from 'react-i18next';
 import ContentWrapper from '../Layout/ContentWrapper';
-import { Container, Progress } from 'reactstrap';
+import { Container, Progress,CardFooter } from 'reactstrap';
 import ReactDataGrid from 'react-data-grid';
 import API from '../../services/BaseService';
 
 
 
-class SingleView extends React.Component {
+class Servers extends React.Component {
     constructor(props, context) {
         super(props, context);
         this.state = {
@@ -15,52 +15,45 @@ class SingleView extends React.Component {
           };
         this._columns = [
             {
-                key: 'batchName',
-                name: 'Batch(batch name)',
-                sortable: true,
-                width:200
+                name: 'Select',
+                render: (text, dataSource) => <input type="checkbox" ></input>
             },
             {
-                key: 'noOfDBs',
-                name: 'No Of DBs',
-                sortable: true
+                key: 'serverName',
+                name: 'Server Name',
+                width:200
+
             },
             
             {
-                key: 'dataSize',
-                name: 'Data Size',
+                key: 'serverId',
+                name: 'Server ID',
+                width:200,
                 sortable: true
             },
             {
-                key: 'docCount',
-                name: 'Doc Count',
+                key: 'location',
+                name: 'Location',
+            },
+            {
+                key: 'dbCount',
+                name: 'DB Count',
                 sortable: true
             },
             {
-                key: 'start',
-                name: 'Start',
-                sortable: true
+                key: 'comments',
+                name: 'Comments',
+                width:200
             },
             {
-                key: 'finish',
-                name: 'Finish',
-                sortable: true
+                name: 'Actions',
             },
-            {
-                key: 'errors',
-                name: 'Errors',
-                sortable: true
-            },
-            {
-                key: 'err',
-                name: '% Err',
-                sortable: true
-            },
+            
         ];
 
     }
     componentWillMount() {
-        API.get('posts')
+        API.get('servers')
         .then((response) => {
           this.setState({rows:response.data});
           console.log("check",this.state.rows);
@@ -88,22 +81,28 @@ class SingleView extends React.Component {
     render() {
         return (
             <ContentWrapper>
-                <div className="content-heading">
-                    <div>Migration Progress
-                    </div>
-                </div>
+               
                 <Container fluid>
                     <ReactDataGrid
                         onGridSort={this.handleGridSort}
                         columns={this._columns}
                         rowGetter={this.rowGetter}
                         rowsCount={this.state.rows.length}
+                //         rowSelection={{
+                // showCheckbox: true,
+                //         }}
                         // minHeight={700} 
                         />
                 </Container>
+                <CardFooter className="text-center">
+                                    <button type="submit" className="btn btn-info" style={{marginRight:10}}>Add Server</button>
+                                    <button type="submit" className="btn btn-info" style={{marginRight:10}}>Edit Selected</button>
+                                    <button type="submit" className="btn btn-info" style={{marginRight:10}}>Delete Selected</button>
+
+                                </CardFooter>
             </ContentWrapper>
         )
     }
 }
 
-export default withNamespaces('translations')(SingleView);
+export default withNamespaces('translations')(Servers);

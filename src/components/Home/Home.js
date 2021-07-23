@@ -8,7 +8,10 @@ import Portfolio from '../Portfolio/Portfolio';
 import Timeline from '../Timeline/Timeline';
 import Contacts from '../Contacts/Contacts';
 import ContactsAcme from '../ContactsAcme/ContactsAcme';
-import '../../styles/app.scss'
+import '../../styles/app.scss';
+import Setup from '../SetUp/Setup';
+import Servers from '../Servers/Servers';
+
 
 
 
@@ -16,6 +19,7 @@ class Home extends React.Component {
     constructor(props, context) {
         super(props, context);
         this.state = {
+            activeTab: 'home'
         };
     }
 
@@ -97,18 +101,14 @@ class Home extends React.Component {
                                         <div className="col-md-6">
                                             <Contacts />
                                             <ContactsAcme />
-                                    </div>
+                                        </div>
                                     </div>
 
                                     <SingleView />
                                 </TabPane>
-                                <TabPane tabId="trans">
-                                    {/* START table responsive */}
-                                    <div className="table-responsive">
-
-
-                                    </div>
-
+                                <TabPane tabId="setup">
+                                    <Setup />
+                                    {/* <Servers/> */}
 
                                 </TabPane>
                             </TabContent>

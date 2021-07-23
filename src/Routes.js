@@ -56,7 +56,7 @@ const Routes = ({ location }) => {
                     <div>
                         <Suspense fallback={<PageLoader/>}>
                             <Switch location={location}>
-                                <Route exact path="/" component={waitFor(Home)}/>
+                                <Route exact path="/" component={Home}/>
                                 <Route path="/singleview" component={waitFor(SingleView)}/>
                                 <Route path="/submenu" component={waitFor(SubMenu)}/>
                                 
