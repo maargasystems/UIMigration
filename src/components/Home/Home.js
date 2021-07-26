@@ -23,8 +23,6 @@ class Home extends React.Component {
         };
     }
 
-
-
     toggleTab = tab => {
         if (this.state.activeTab !== tab) {
             this.setState({

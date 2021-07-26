@@ -4,6 +4,8 @@ import ContentWrapper from '../Layout/ContentWrapper';
 import { Container, Progress } from 'reactstrap';
 import ReactDataGrid from 'react-data-grid';
 import API from '../../services/BaseService';
+import { Table } from 'antd';
+
 
 
 
@@ -11,79 +13,72 @@ class SingleView extends React.Component {
     constructor(props, context) {
         super(props, context);
         this.state = {
-            rows: [],
-          };
-        this._columns = [
-            {
-                key: 'batchName',
-                name: 'Batch(batch name)',
-                sortable: true,
-                width:200
-            },
-            {
-                key: 'noOfDBs',
-                name: 'No Of DBs',
-                sortable: true
-            },
-            
-            {
-                key: 'dataSize',
-                name: 'Data Size',
-                sortable: true
-            },
-            {
-                key: 'docCount',
-                name: 'Doc Count',
-                sortable: true
-            },
-            {
-                key: 'start',
-                name: 'Start',
-                sortable: true
-            },
-            {
-                key: 'finish',
-                name: 'Finish',
-                sortable: true
-            },
-            {
-                key: 'errors',
-                name: 'Errors',
-                sortable: true
-            },
-            {
-                key: 'err',
-                name: '% Err',
-                sortable: true
-            },
-        ];
+
+            columns: [
+                {
+                    dataIndex: 'batchName',
+                    title: 'Batch(batch name)',
+                    sorter: (a, b) => a.batchName - b.batchName,
+                    sortDirections: ['descend', 'ascend'],
+
+                },
+                {
+                    dataIndex: 'noOfDBs',
+                    title: 'No Of DBs',
+                    sorter: (a, b) => a.noOfDBs - b.noOfDBs,
+                    sortDirections: ['descend', 'ascend'],
+                },
+
+                {
+                    dataIndex: 'dataSize',
+                    title: 'Data Size',
+                    sorter: (a, b) => a.dataSize - b.dataSize,
+                    sortDirections: ['descend', 'ascend'],
+                },
+                {
+                    dataIndex: 'docCount',
+                    title: 'Doc Count',
+                    sorter: (a, b) => a.docCount - b.docCount,
+                    sortDirections: ['descend', 'ascend'],
+                },
+                {
+                    dataIndex: 'start',
+                    title: 'Start',
+                    sorter: (a, b) => a.start - b.start,
+                    sortDirections: ['descend', 'ascend'],
+                },
+                {
+                    dataIndex: 'finish',
+                    title: 'Finish',
+                    sorter: (a, b) => a.finish - b.finish,
+                    sortDirections: ['descend', 'ascend'],
+                },
+                {
+                    dataIndex: 'errors',
+                    title: 'Errors',
+                    sorter: (a, b) => a.errors - b.errors,
+                    sortDirections: ['descend', 'ascend'],
+                },
+                {
+                    dataIndex: 'err',
+                    title: '% Err',
+                    sorter: (a, b) => a.err - b.err,
+                    sortDirections: ['descend', 'ascend'],
+                },
+            ]
+        }
 
     }
     componentWillMount() {
         API.get('posts')
-        .then((response) => {
-          this.setState({rows:response.data});
-          console.log("check",this.state.rows);
+            .then((response) => {
+                this.setState({ rows: response.data });
+                console.log("check", this.state.rows);
 
-        });
-      }
+            });
+    }
 
-    rowGetter = (i) => this.state.rows[i]
 
-    handleGridSort = (sortColumn, sortDirection) => {
-        const comparer = (a, b) => {
-          if (sortDirection === 'ASC') {
-            return (a[sortColumn] > b[sortColumn]) ? 1 : -1;
-          } else if (sortDirection === 'DESC') {
-            return (a[sortColumn] < b[sortColumn]) ? 1 : -1;
-          }
-        };
-
-        const rows = sortDirection === 'NONE' ? this.state.originalRows.slice(0) : this.state.rows.sort(comparer);
-
-        this.setState({ rows });
-    };
-    
 
     render() {
         return (
@@ -93,13 +88,7 @@ class SingleView extends React.Component {
                     </div>
                 </div>
                 <Container fluid>
-                    <ReactDataGrid
-                        onGridSort={this.handleGridSort}
-                        columns={this._columns}
-                        rowGetter={this.rowGetter}
-                        rowsCount={this.state.rows.length}
-                        // minHeight={700} 
-                        />
+                    <Table columns={this.state.columns} dataSource={this.state.rows} bordered />
                 </Container>
             </ContentWrapper>
         )

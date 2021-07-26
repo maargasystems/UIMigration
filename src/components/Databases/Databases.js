@@ -4,59 +4,59 @@ import ContentWrapper from '../Layout/ContentWrapper';
 import { Container, Progress,CardFooter } from 'reactstrap';
 import ReactDataGrid from 'react-data-grid';
 import API from '../../services/BaseService';
+import { Table } from 'antd';
+
 
 
 
 class Databases extends React.Component {
     constructor(props, context) {
         super(props, context);
-        this.state = {
-            rows: [],
-          };
-        this._columns = [
+        this.state = {   
+        columns : [
             {
-                name: 'Select',
+                title: 'Select',
                 render: (text, dataSource) => <input type="checkbox" ></input>
             },
             {
-                key: 'databaseName',
-                name: 'DatabaseName',
-                width:200
+                dataIndex: 'databaseName',
+                title: 'DatabaseName',
 
             },
             
             {
-                key: 'databaseId',
-                name: 'Database ID',
-                width:200
+                dataIndex: 'databaseId',
+                title: 'Database ID',
 
             },
             {
-                key: 'serverId',
-                name: 'Server ID',
-                sortable: true
+                dataIndex: 'serverId',
+                title: 'Server ID',
+                sorter: (a, b) => a.serverId - b.serverId,
+                sortDirections: ['descend', 'ascend'],
 
             },
             {
-                key: 'docCount',
-                name: 'DocCount',
-                sortable: true
+                dataIndex: 'docCount',
+                title: 'DocCount',
+                sorter: (a, b) => a.docCount - b.docCount,
+                sortDirections: ['descend', 'ascend'],
+
             },
             {
-                key: 'size',
-                name: 'Size',
-                width:200
+                dataIndex: 'size',
+                title: 'Size',
             },
             {
-                key: 'comment',
-                name: 'Comment',
-                width:500
+                dataIndex: 'comment',
+                title: 'Comment',
             },
             {
-                name: 'Actions',
+                title: 'Actions',
             },
             
-        ];
+        ]
+    }
 
     }
     componentWillMount() {
@@ -68,35 +68,13 @@ class Databases extends React.Component {
         });
       }
 
-    rowGetter = (i) => this.state.rows[i]
-
-    handleGridSort = (sortColumn, sortDirection) => {
-        const comparer = (a, b) => {
-          if (sortDirection === 'ASC') {
-            return (a[sortColumn] > b[sortColumn]) ? 1 : -1;
-          } else if (sortDirection === 'DESC') {
-            return (a[sortColumn] < b[sortColumn]) ? 1 : -1;
-          }
-        };
-
-        const rows = sortDirection === 'NONE' ? this.state.originalRows.slice(0) : this.state.rows.sort(comparer);
-
-        this.setState({ rows });
-    };
-    
-
     render() {
         return (
             <ContentWrapper>
                
                 <Container fluid>
-                    <ReactDataGrid
-                        onGridSort={this.handleGridSort}
-                        columns={this._columns}
-                        rowGetter={this.rowGetter}
-                        rowsCount={this.state.rows.length}
-                        // minHeight={700} 
-                        />
+                <Table columns={this.state.columns} dataSource={this.state.rows} bordered />
+                    
                 </Container>
                 <CardFooter className="text-center">
                                     <button type="submit" className="btn btn-info" style={{marginRight:10}}>Add Database</button>
