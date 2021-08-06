@@ -7,6 +7,7 @@ import PageLoader from './components/Common/PageLoader';
 
 import Base from './components/Layout/Base';
 import BasePage from './components/Layout/BasePage';
+import TreeData from './components/TreeData/TreeData';
 // import BaseHorizontal from './components/Layout/BaseHorizontal';
 
 /* Used to render a lazy component with react-router */
@@ -59,6 +60,7 @@ const Routes = ({ location }) => {
                                 <Route exact path="/" component={Home}/>
                                 <Route path="/singleview" component={waitFor(SingleView)}/>
                                 <Route path="/submenu" component={waitFor(SubMenu)}/>
+                                <Route path="/treedata" component={waitFor(TreeData)}/>
                                 
 
                                 <Redirect to="/home"/>
