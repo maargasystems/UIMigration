@@ -1,0 +1,1 @@
+export const GET_SERVERS = "GET_SERVERS"

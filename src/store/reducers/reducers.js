@@ -1,9 +1,20 @@
-import { combineReducers } from 'redux';
+import * as types from "../actionType/actiontype";
 
-import settingsReducer from './settings.reducer.js';
-import themesReducer from './themes.reducers.js';
-
-export default combineReducers({
-    settings: settingsReducer,
-    theme: themesReducer
-});
+const initialState ={
+    servers : [],
+    server : {},
+    loading: true
+};
+const serverReducer = (state =initialState,action) => {
+    switch(action.type){
+        case types.GET_SERVERS:
+            return {
+                ...state,
+                servers:action.payload,
+                loading:false,
+            }
+        default:
+            return state;
+    } 
+}
+export default serverReducer;

@@ -8,6 +8,10 @@ import { Table } from 'antd';
 import { v4 as uuidv4 } from 'uuid';
 import { EditOutlined,DeleteOutlined } from '@ant-design/icons';
 import { orderBy } from 'lodash';
+import { withRouter } from 'react-router-dom';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { loadservers } from '../../store/actions/actions';
 
 
 
@@ -19,10 +23,7 @@ class Servers extends React.Component {
         super(props, context);
         this.state = {
             columns: [
-                {
-                    title: 'Select',
-                    render: (text, dataSource) => <input type="checkbox" ></input>
-                },
+               
                 {
                     dataIndex: 'serverName',
                     title: 'Server Name',
@@ -102,6 +103,7 @@ class Servers extends React.Component {
 
             });
     };
+    
     deleteServer = (dataSource) => {
         const request = {
           "Active": 0
@@ -112,12 +114,36 @@ class Servers extends React.Component {
                 window.location.reload();
           });
       }
+     
+    //   
+    //   editServer = (selectedRows) => {
+    //     alert(selectedRows)
+    // }
+    // handleSelectedDelete=()=>{
+    //     // if(this.state.selectedRows.length>0){
+    //     //   console.log("delet",...this.state.selectedRows)
+    //     //   const rows = [...this.state.rows]
+    //     //   rows.splice(this.state.selectedRows,this.state.selectedRows.length)
+    //     //   this.setState({ rows });
+    //     // }
+    //     // else{
+     
+    //     // }
+        
+    //   }
+    rowSelection = {
+        onChange: (selectedRowKeys, selectedRows) => {
+          console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+        },
+      };
     render() {
+        
         return (
             <ContentWrapper>
-
                 <Container fluid>
-                    <Table columns={this.state.columns} dataSource={this.state.rows} bordered />
+                    <Table columns={this.state.columns} dataSource={this.state.rows} 
+                    rowSelection={this.rowSelection}
+        bordered />
 
                 </Container>
                 <CardFooter className="text-center">
@@ -153,8 +179,8 @@ class Servers extends React.Component {
                             </form>
                         </ModalBody>
                     </Modal>
-                    <button type="submit" className="btn btn-info" style={{ marginRight: 10 }}>Edit Selected</button>
-                    {/* <button type="submit" className="btn btn-info" style={{ marginRight: 10 }}>Delete Selected</button> */}
+                    <button type="submit" className="btn btn-info"   onClick={() => this.editServer()} style={{ marginRight: 10 }}>Edit Selected</button>
+                    {/* <button type="submit" className="btn btn-info" onClick={this. handleSelectedDelete} style={{ marginRight: 10 }}>Delete Selected</button> */}
 
                 </CardFooter>
             </ContentWrapper>
@@ -162,4 +188,20 @@ class Servers extends React.Component {
     }
 }
 
-export default withNamespaces('translations')(Servers);
+// export default withNamespaces('translations')(Servers);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+        loadservers
+    },
+    dispatch,
+  )
+const mapStateToProps = state => ({
+  servers: state.servers,
+})
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps,
+  )(Servers),
+)
