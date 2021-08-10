@@ -6,13 +6,16 @@ import { updateTheme } from './middlewares/themes.middleware.js';
 
 import { persistedState, saveState } from './persisted.store.js';
 
+import thunk from 'redux-thunk';
+
+
 export default function configureStore() {
 
     const store = createStore(
         reducers,
         persistedState, // second argument overrides the initial state
         applyMiddleware(
-            ...middlewares
+            ...middlewares,thunk
         )
     );
 

@@ -111,6 +111,7 @@
     "react-transition-group": "2.5.0",
     "reactstrap": "6.5.0",
     "recompose": "0.30.0",
+    "redux-thunk": "^2.3.0",
     "rtlcss": "2.4.0",
     "screenfull": "3.3.3",
     "simple-line-icons": "2.4.1",

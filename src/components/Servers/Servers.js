@@ -13,11 +13,6 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { loadservers } from '../../store/actions/actions';
 
-
-
-
-
-
 class Servers extends React.Component {
     constructor(props, context) {
         super(props, context);
@@ -61,7 +56,7 @@ class Servers extends React.Component {
         }
     }
     componentWillMount() {
-        API.get('servers')
+        this.props.loadservers()
             .then((response) => {
             const filteredDetails = orderBy(response.data.filter(data => data.Active === 1),'id','desc');
                 this.setState({ rows: filteredDetails});
