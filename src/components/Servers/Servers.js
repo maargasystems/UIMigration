@@ -56,7 +56,8 @@ class Servers extends React.Component {
         }
     }
     componentWillMount() {
-        this.props.loadservers()
+        // this.props.loadservers()
+        API.get('servers')
             .then((response) => {
             const filteredDetails = orderBy(response.data.filter(data => data.Active === 1),'id','desc');
                 this.setState({ rows: filteredDetails});

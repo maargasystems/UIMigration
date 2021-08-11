@@ -25,13 +25,13 @@ class TreeData extends React.Component {
                             // disabled: true,
                             children: [
                                 {
-                                    title: 'leaf',
-                                    key: 'leaf',
+                                    title: 'FormA',
+                                    key: 'name',
                                     // disableCheckbox: true,
                                 },
                                 {
-                                    title: 'leaf',
-                                    key: 'sss',
+                                    title: 'FormB',
+                                    key: 'name1',
                                 },
                             ],
                         },
@@ -100,18 +100,18 @@ class TreeData extends React.Component {
                         },
                     ],
             
-                    columns: [
-                        {
-                            dataIndex: 'destination',
-                            title: 'Destination',
-                        },
-                        {
-                            dataIndex: 'category',
-                            title: 'Category',
-                        },
+                    // columns: [
+                    //     {
+                    //         dataIndex: 'destination',
+                    //         title: 'Destination',
+                    //     },
+                    //     {
+                    //         dataIndex: 'category',
+                    //         title: 'Category',
+                    //     },
         
                        
-                    ],
+                    // ],
                     // columns1:[
                     //     {
                     //         dataIndex: 'maxsize',
@@ -135,10 +135,10 @@ class TreeData extends React.Component {
     console.log('onCheck', checkedKeys, info);
   };
     componentWillMount() {
-        API.get('treedata')
+        API.get('databases1/35203112-1394-4950-9774-7bb1b71eb51f?_embed=formB')
             .then((response) => {
-                this.setState({ rows: response.data });
-                console.log("check", this.state.rows);
+                this.setState({ treedata: response.data });
+                console.log("data", this.state.treedata);
 
             });
             API.get('options')
@@ -171,9 +171,9 @@ class TreeData extends React.Component {
                         treeData={this.state.treeData}
                     />
                     </Col>
-                    <Col lg ={8}>
+                    {/* <Col lg ={8}>
                     <Table columns={this.state.columns} dataSource={this.state.rows} bordered pagination={false}/>
-                    </Col>
+                    </Col> */}
                     {/* <Col lg ={4}>
                     <Table columns={this.state.columns1} dataSource={this.state.items} bordered pagination={false}/>
                     </Col> */}
